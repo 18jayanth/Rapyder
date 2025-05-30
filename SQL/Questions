@@ -1,4 +1,4 @@
-## Q1)write a sql query to find top 3 highest paid employees**
+Q1)write a sql query to find top 3 highest paid employees**
  select ename from emp where sal>=
  (select min(sal) from (select distinct sal from emp order by sal desc) where rownum<=3 ) and rownum<=3;
 ENAME
@@ -6,4 +6,49 @@ ENAME
 JONES
 SCOTT
 KING
+
+
+Q2) Write a SQL query to find average of salaries in each department
+ 
+select deptno,avg(sal) from emp group by deptno;
+DEPTNO   AVG(SAL)
+------ ----------
+    30 1566.66667
+    20    2518.75
+    10 2916.66667
+
+Q3)second lowest salary from employee table
+ select max(sal) from (select sal from emp order by sal) where rownum<=2;
+MAX(SAL)
+------
+  1100
+
+Q4)Names of employees who joined last month
+select ename from emp where to_char(hiredate,'mm')='04';
+ENAME
+---------
+JONES
+SCOTT
+
+Q5) Third highest salary withou using top and limit
+ select max(sal) from emp where sal<
+(select max(sal) from emp where sal<
+(select max(sal) from emp));
+
+
+Q6)You have table orders with columns orderid,customerid,order date,amount write a query to find top 3 customers who spend the most last month
+SELECT customerid 
+ FROM (
+     SELECT customerid
+     FROM orders
+     WHERE EXTRACT(MONTH FROM orderdate) = 4
+     ORDER BY amount DESC
+ )
+ WHERE ROWNUM <= 3;
+
+Q7)Write  a SQL query to find all employees who have more than 2 subordinates you are given a table employee(eid,ename,mgr) where mgr refers to manager of employee
+ SELECT e.eid, e.ename  FROM Employ e WHERE e.eid IN (SELECT mgr from employ where mgr is not null group by mgr HAVING COUNT(*) > 2);
+
+
+
 
