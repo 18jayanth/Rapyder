@@ -1,4 +1,4 @@
-**Q1)write a sql query to find top 3 highest paid employees**
+##Q1)write a sql query to find top 3 highest paid employees**
  select ename from emp where sal>=
  (select min(sal) from (select distinct sal from emp order by sal desc) where rownum<=3 ) and rownum<=3;
 ENAME
